@@ -69,15 +69,12 @@ public class memoryGame extends JFrame
 
 
     public void actionPerformed(ActionEvent e) {
-
-        //debug, checks which button is being pressed
         for(int i = 0; i < MAX_CARDS; i++){
             if(e.getSource() == cards[i]){
                 if(!cardToggleCheck(cards[i].getID())) {
                     cards[i].toggle();
                     cardsToggled++;
 
-                    //go ahead and flip the card
                     if (lastChosen != NONE_CHOSEN && cards[i].getID() != lastChosen) {  //if user has already made 1 choice & user hasnt clicked the same exact card
                         if (matchCheck(lastChosen, i)) {
                             handleMatch(i, lastChosen);
@@ -97,8 +94,6 @@ public class memoryGame extends JFrame
                 updateScore();
             }
         }
-
-
     }
 
     /*
@@ -140,31 +135,6 @@ public class memoryGame extends JFrame
             cardPanel.add(cards[i]);
         }
     }
-
-
-    /*
-        Name: resetCards
-        Description: Does what it says, resets cards back to original states, by removing all actionlisteners,
-                     adding them back, setting them to unmatched, flipping them back over, and resetting the icon
-                     by adding the newest randomized order that is made by the ShuffleOrder() function.
-     */
-
-    private void resetCards(){
-        cardAnimations[0] = 0;
-        cardAnimations[1] = 0;
-        shuffleOrder();                                             //shuffle Order of Icons
-
-        for(int i = 0; i < MAX_CARDS; i++){                                //fix buttons
-            if(cards[i].getActionListeners() != null){              //remove existing listeners
-                cards[i].removeActionListener(this);
-            }
-            cards[i].addActionListener(this);                       //then add brand spankin new ones
-            cards[i].reset();
-            cards[i].resetIcon(cardOrder[i], pics[cardOrder[i]]);   //randomize icon
-        }
-    }
-
-
 
     /*
         Name: initMenuPanel
@@ -210,18 +180,6 @@ public class memoryGame extends JFrame
         }
     }
 
-    /*
-            Name: restartGame
-            Description: reset scores (matches/guesses), Update Scores on UI, reset cards back to original state,
-                            and forces a redraw.
-     */
-    public void restartGame(){
-        setScores(0,0);
-        updateScore();
-        resetCards();
-        repaint();
-    }
-
 
     /*
             Name: updateScore
@@ -259,10 +217,7 @@ public class memoryGame extends JFrame
     }
 
     private boolean cardToggleCheck(int currCardID){
-        return (cards[currCardID].isToggled() &&
-                ((cards[cardAnimations[0]].getAniFinished() && cards[cardAnimations[1]].getAniFinished())
-                        || (cardAnimations[0] == 0 || cardAnimations[1] == 0))
-                && cardsToggled < MAX_TOGGLED + 1);
+        return (cards[currCardID].isToggled() && cardsToggled < MAX_TOGGLED + 1);
     }
 
     private void handleMatch(int current, int previous){
@@ -310,6 +265,40 @@ public class memoryGame extends JFrame
             cardOrder[i] = cardOrder[randomNum];
             cardOrder[randomNum] = temp;
         }
+    }
+
+    /*
+        Name: resetCards
+        Description: Does what it says, resets cards back to original states, by removing all actionlisteners,
+                     adding them back, setting them to unmatched, flipping them back over, and resetting the icon
+                     by adding the newest randomized order that is made by the ShuffleOrder() function.
+     */
+
+    private void resetCards(){
+        cardAnimations[0] = 0;
+        cardAnimations[1] = 0;
+        shuffleOrder();                                             //shuffle Order of Icons
+
+        for(int i = 0; i < MAX_CARDS; i++){                                //fix buttons
+            if(cards[i].getActionListeners() != null){              //remove existing listeners
+                cards[i].removeActionListener(this);
+            }
+            cards[i].addActionListener(this);                       //then add brand spankin new ones
+            cards[i].reset();
+            cards[i].resetIcon(cardOrder[i], pics[cardOrder[i]]);   //randomize icon
+        }
+    }
+
+    /*
+        Name: restartGame
+        Description: reset scores (matches/guesses), Update Scores on UI, reset cards back to original state,
+                        and forces a redraw.
+ */
+    public void restartGame(){
+        setScores(0,0);
+        updateScore();
+        resetCards();
+        repaint();
     }
 
 
