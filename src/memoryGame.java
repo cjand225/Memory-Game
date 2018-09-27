@@ -6,8 +6,7 @@
                 made the user can choose to reset the game and play again.
     Depends on: cardButton.java, Back.png, 0-13.png
     Known Bugs: None known at the time, but some poorly scoped logic awaits for the ActionListener
-                & also probably poorly formmated comments, I wrote them in Intellij using an 1080p monitor
-                if they seem illegible.
+                & also probably poorly formmated comments.
 
  */
 
