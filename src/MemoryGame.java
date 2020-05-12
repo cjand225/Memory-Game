@@ -94,7 +94,7 @@ public class MemoryGame extends JFrame implements ActionListener {
    * Name: actionPerformed
    * Description: checks actions that have happened for cards
    *              that have been clicked.
-   * @param e used to check what actionocurred from which object
+   * @param e used to check what action occurred from which object
    *          on JFrame.
    */
 
